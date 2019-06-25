@@ -50,9 +50,7 @@ RUN sha1sum -c /tmp/trtis/tools/patch/tensorflow/checksums && \
     patch -i /tmp/trtis/tools/patch/tensorflow/nvbuild.sh \
           /opt/tensorflow/nvbuild.sh && \
     patch -i /tmp/trtis/tools/patch/tensorflow/nvbuildopts \
-          /opt/tensorflow/nvbuildopts && \
-    patch -i /tmp/trtis/tools/patch/tensorflow/bazel_build.sh \
-          /opt/tensorflow/bazel_build.sh
+          /opt/tensorflow/nvbuildopts
 
 # Copy tensorflow_backend_tf into TensorFlow so it builds into the
 # monolithic libtensorflow_cc library. We want tensorflow_backend_tf
@@ -63,7 +61,7 @@ COPY src/backends/tensorflow/tensorflow_backend_tf.* \
 
 # Build TensorFlow library for TRTIS
 WORKDIR /opt/tensorflow
-RUN ./nvbuild.sh --python3.5
+RUN ./nvbuild.sh --python3.6
 
 ############################################################################
 ## PyTorch stage: Use PyTorch container for Caffe2 and libtorch
